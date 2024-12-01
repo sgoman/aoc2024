@@ -17,4 +17,4 @@ If you want to write a days challenge from scratch, issue "./aoc init 1" to gene
 The challenges
 --------------
 
-1. **[demo](day01.js)** Some explanation
+1. **[Day 1: Historian Hysteria](day01.js)** Read pairs of numbers, calculate distance and similarity
