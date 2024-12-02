@@ -9,7 +9,7 @@ const differences = nums => nums.reduce((diffs, num, i) => i ? [...diffs, num - 
 const isSafe = diffs => diffs.every(num => num <= 3 && num >= -3) * (diffs.every(num => num > 0) || diffs.every(num => num < 0))
 
 const solve = (isPart2, input) => parseInput(input)
-    .map((report, i) => {
+    .map(report => {
         if (isSafe(differences(report))) return 1
         if (!isPart2) return 0
         const omitOne = tmp => tmp.length == report.length - 1
