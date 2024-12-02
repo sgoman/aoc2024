@@ -2,43 +2,24 @@
 
 const { combineConditionally } = require('./utils.js')
 
-const parseInput = input => {
-    return input.split('\n').map(l => l.match(/\d+/g).map(Number))
-}
+const parseInput = input => input.split('\n').map(line => line.match(/\d+/g).map(Number))
 
-const solve = (isPart2, input) => {
-    return input
-}
+const differences = nums => nums.reduce((diffs, num, i) => i ? [...diffs, num - nums[i - 1]] : diffs, [])
 
-const differences = nums => nums.reduce((acc, cur, i, arr) => i ? [...acc, cur - arr[i - 1]] : acc, [])
+const isSafe = diffs => diffs.every(num => num <= 3 && num >= -3) * (diffs.every(num => num > 0) || diffs.every(num => num < 0))
 
-const safe = d => d.every(num => num < 4 && num > -4) * (d.every(num => num > 0) || d.every(num => num < 0))
+const solve = (isPart2, input) => parseInput(input)
+    .map((report, i) => {
+        if (isSafe(differences(report))) return 1
+        if (!isPart2) return 0
+        const omitOne = tmp => tmp.length == report.length - 1
+        const everything = tmp => true
+        return 1 * combineConditionally(report, omitOne, everything).some(c => isSafe(differences(c)))
+    })
+    .reduce((acc, cur) => acc + cur, 0)
 
-const part1 = input => {
-    const reports = parseInput(input)
-    const diffs = reports.map(differences)
-    return diffs
-        .map(d => d.every(num => num < 4 && num > -4) * (d.every(num => num > 0) || d.every(num => num < 0)))
-        .reduce((acc, cur) => acc + cur, 0)
-}
+const part1 = input => solve(false, input)
 
-const part2 = input => {
-    const reports = parseInput(input)
-    return reports
-        .map((r, i) => {
-            const d = differences(r)
-            if (safe(d)) return 1
-            const removeOne = tmp => tmp.length == r.length - 1
-            const everything = tmp => true
-            const combos = combineConditionally(r, removeOne, everything)
-            console.log('Report ' + i + ': ' + r)
-            console.log(combos)
-            for (const c of combos) {
-                if (safe(differences(c))) return 1
-            }
-            return 0
-        })
-        .reduce((acc, cur) => acc + cur, 0)
-}
+const part2 = input => solve(true, input)
 
 module.exports = { part1, part2 }
