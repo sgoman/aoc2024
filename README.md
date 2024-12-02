@@ -18,3 +18,4 @@ The challenges
 --------------
 
 1. **[Day 1: Historian Hysteria](day01.js)** Read pairs of numbers, calculate distance and similarity
+2. **[Day 2: Red-Nosed Reports](day02.js)** Are all numbers on a line exclusively ascending by at most 3 or descending by -3? In part 2 you might omit one number.
