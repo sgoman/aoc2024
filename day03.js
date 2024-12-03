@@ -1,23 +1,9 @@
 'use strict'
 
-const parseInput = input => {
-    return input.match(/mul\((\d+),(\d+)\)/g).map(m => m.match(/\d+/g).map(Number))
-}
+const sumMul = input => input.match(/mul\(\d+,\d+\)/g).map(m => m.match(/\d+/g).map(Number)).reduce((total, [l, r]) => total + l * r, 0)
 
-const parseInput2 = input => {
-    return input.split('do()').map(s => s.split('don\'t()')[0]).join().match(/mul\((\d+),(\d+)\)/g).map(m => m.match(/\d+/g).map(Number))
-}
+const part1 = input => sumMul(input)
 
-const solve = (isPart2, input) => {
-    return input
-}
-
-const part1 = input => {
-    return parseInput(input).reduce((total, [l, r]) => total + l * r, 0)
-}
-
-const part2 = input => {
-    return parseInput2(input).reduce((total, [l, r]) => total + l * r, 0)
-}
+const part2 = input => sumMul(input.split('do()').map(s => s.split('don\'t()')[0]).join())
 
 module.exports = { part1, part2 }
