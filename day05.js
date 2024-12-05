@@ -1,13 +1,11 @@
 'use strict'
 
-const parseInput = input => input.split('\n\n').map(block => block.split('\n').map(line => line.match(/\d+/g).map(Number)))
-
 const solve = (isPart2, input) => {
-    const [rules, updates] = parseInput(input)
+    const [rules, updates] = input.split('\n\n').map(block => block.split('\n').map(line => line.match(/\d+/g).map(Number))) 
     return updates.reduce((total, update) => {
         const relevant = rules.filter(([left, right]) => update.includes(left) && update.includes(right))
         if (relevant.every(([left, right]) => update.indexOf(left) < update.indexOf(right))) {
-            if (!isPart2) total += update[update.length >> 1]
+            total += update[update.length >> 1] * (!isPart2)
         } else if (isPart2) {
             update.sort((a, b) => {
                 let rule = relevant.find(r => r.includes(a) && r.includes(b))
