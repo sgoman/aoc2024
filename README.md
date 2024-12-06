@@ -20,3 +20,5 @@ The challenges
 1. **[Day 1: Historian Hysteria](day01.js)** Read pairs of numbers, calculate distance and similarity
 2. **[Day 2: Red-Nosed Reports](day02.js)** Are all numbers on a line exclusively ascending by at most 3 or descending by -3? In part 2 you might omit one number.
 3. **[Day 3: Mull It Over](day03.js)** A simple RegEx for part 1 and some additional clever splitting and joining for part 2
+4. **[Day 4: Ceres Search](day04.js)** Find 'XMAS' on a grid in all 8 directions. Then find 'MAS' in the shape of an X.
+5. **[Day 5: Print Queue](day05.js)** Find updates that are in the correct order for part 1, reorder the updates that are not for part 2
