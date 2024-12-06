@@ -9,54 +9,42 @@ const getStartParams = input => input.reduce((pos, line, r) => {
 	return c != -1 ? [r, c, '^>v<'.indexOf(line[c])] : pos
     }, [-1, -1, -1])
 
-const isLooping = grid => {
-    let [r, c, d] = getStartParams(grid)
-    const seen = new Set()
+const walk = (grid, r, c, d) => {
+    const state = new Set(), visited = new Set()
     while (validCoordForGrid(r, c, grid)) {
-        if (seen.has(`${r},${c},${d}`)) return 1
-        seen.add(`${r},${c},${d}`)
+        if (state.has(`${r},${c},${d}`)) return [visited.size, 1]
+        state.add(`${r},${c},${d}`)
+        visited.add(`${r},${c}`)
         const nextTiles = getSurrounding(grid, r, c, [fourWayDeltas[d]])
-        if (nextTiles.length == 0) return 0
-        const nextTile = nextTiles[0]
-        if (nextTile.tile == '#') {
+        if (nextTiles.length == 0) return [visited.size, 0]
+        if (nextTiles[0].tile == '#') {
             d = (d + 1) % 4
         } else {
-            [r, c] = [nextTile.row, nextTile.col]
+            [r, c] = [nextTiles[0].row, nextTiles[0].col]
         }
     }
-    return 0
+    return [visited.size, 0]
 }
 
-const solve = (isPart2, input) => {
+const part1 = input => {
     input = parseInput(input)
-    let [r, c, d] = getStartParams(input)
-    const seen = new Set()
-    while (validCoordForGrid(r, c, input)) {
-        seen.add(`${r},${c}`)
-        const nextTiles = getSurrounding(input, r, c, [fourWayDeltas[d]])
-        if (nextTiles.length == 0) break
-        const nextTile = nextTiles[0]
-        if (nextTile.tile == '#') {
-            d = (d + 1) % 4
-        } else {
-            [r, c] = [nextTile.row, nextTile.col]
-        }
-    }
-    if (!isPart2) return seen.size
+    const [r, c, d] = getStartParams(input)
+    return walk(input, r, c, d)[0]
+}
+
+const part2 = input => {
+    input = parseInput(input)
+    const [r, c, d] = getStartParams(input)
     let loops = 0
     for (let row = 0; row < input.length; row++) {
         for (let col = 0; col < input[row].length; col++) {
             if (input[row][col] != '.') continue
             const grid = input.map(line => line.map(tile => tile))
             grid[row][col] = '#'
-            loops += isLooping(grid)
+            loops += walk(grid, r, c, d)[1]
 	}
     }
     return loops
 }
-
-const part1 = input => solve(false, input)
-
-const part2 = input => solve(true, input)
 
 module.exports = { part1, part2 }
