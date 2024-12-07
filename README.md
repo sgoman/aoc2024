@@ -23,3 +23,4 @@ The challenges
 4. **[Day 4: Ceres Search](day04.js)** Find 'XMAS' on a grid in all 8 directions. Then find 'MAS' in the shape of an X.
 5. **[Day 5: Print Queue](day05.js)** Find updates that are in the correct order for part 1, reorder the updates that are not for part 2
 6. **[Day 6: Guard Gallivant](day06.js)** Navigate on a grid until you walk off for part 1, place obstacles that makes you loop for part 2
+7. **[Day 7: Bridge Repair](day07.js)** Find combinations from a list of operations that resolve an equation. Part 2 knows of one more operation.
