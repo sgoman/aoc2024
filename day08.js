@@ -1,6 +1,6 @@
 'use strict'
 
-const { validCoordForGrid, combineConditionally, pairs } = require('./utils.js')
+const { validCoordForGrid, pairs } = require('./utils.js')
 
 const parseInput = input => input.split('\n').map(l => l.split(''))
 
@@ -20,23 +20,17 @@ const getAllAntennas = grid => {
 const addAntinodes = (grid, antennas, antinodes, isPart2) => {
     if (antennas.length < 2) return antinodes
     for (const [a, b] of pairs(antennas)) {
-        const antinodeA = [a[0] - b[0], a[1] - b[1]]
-        const antinodeB = [b[0] - a[0], b[1] - a[1]]
-        if (isPart2) {
-            for (let [[row, col], [dRow, dCol]] of [[a, antinodeA], [b, antinodeB]]) {
-                antinodes.add(`${row},${col}`)
-                let [nr, nc] = [row + dRow, col + dCol]
-                while (validCoordForGrid(nr, nc, grid)) {
-                    antinodes.add(`${nr},${nc}`)
-                    nr += dRow
-                    nc += dCol
-                }
+        const offsetA = [a[0] - b[0], a[1] - b[1]]
+        const offsetB = [b[0] - a[0], b[1] - a[1]]
+        for (let [[row, col], [dRow, dCol]] of [[a, offsetA], [b, offsetB]]) {
+            if (isPart2) antinodes.add(`${row},${col}`)
+            let [nr, nc] = [row + dRow, col + dCol]
+            while (validCoordForGrid(nr, nc, grid)) {
+                antinodes.add(`${nr},${nc}`)
+                if (!isPart2) break
+                nr += dRow
+                nc += dCol
             }
-        } else {
-            let pos = [a[0] + antinodeA[0], a[1] + antinodeA[1]]
-            if (validCoordForGrid(pos[0], pos[1], grid)) antinodes.add(`${pos[0]},${pos[1]}`)
-            pos = [b[0] + antinodeB[0], b[1] + antinodeB[1]]
-            if (validCoordForGrid(pos[0], pos[1], grid)) antinodes.add(`${pos[0]},${pos[1]}`)
         }
     }
     return antinodes
