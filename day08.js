@@ -17,13 +17,27 @@ const getAllAntennas = grid => {
     return antennas
 }
 
-const addAntinodes = (grid, antennas, antinodes) => {
+const addAntinodes = (grid, antennas, antinodes, isPart2) => {
     if (antennas.length < 2) return antinodes
     for (const [a, b] of pairs(antennas)) {
-        const antinodeA = [a[0] + (a[0] - b[0]), a[1] + (a[1] - b[1])]
-        const antinodeB = [b[0] + (b[0] - a[0]), b[1] + (b[1] - a[1])]
-        if (validCoordForGrid(antinodeA[0], antinodeA[1], grid)) antinodes.add(`${antinodeA[0]},${antinodeA[1]}`)
-        if (validCoordForGrid(antinodeB[0], antinodeB[1], grid)) antinodes.add(`${antinodeB[0]},${antinodeB[1]}`)
+        const antinodeA = [a[0] - b[0], a[1] - b[1]]
+        const antinodeB = [b[0] - a[0], b[1] - a[1]]
+        if (isPart2) {
+            for (let [[row, col], [dRow, dCol]] of [[a, antinodeA], [b, antinodeB]]) {
+                antinodes.add(`${row},${col}`)
+                let [nr, nc] = [row + dRow, col + dCol]
+                while (validCoordForGrid(nr, nc, grid)) {
+                    antinodes.add(`${nr},${nc}`)
+                    nr += dRow
+                    nc += dCol
+                }
+            }
+        } else {
+            let pos = [a[0] + antinodeA[0], a[1] + antinodeA[1]]
+            if (validCoordForGrid(pos[0], pos[1], grid)) antinodes.add(`${pos[0]},${pos[1]}`)
+            pos = [b[0] + antinodeB[0], b[1] + antinodeB[1]]
+            if (validCoordForGrid(pos[0], pos[1], grid)) antinodes.add(`${pos[0]},${pos[1]}`)
+        }
     }
     return antinodes
 }
@@ -32,7 +46,7 @@ const solve = (isPart2, input) => {
     input = parseInput(input)
     let antinodes = new Set()
     const allAntennas = getAllAntennas(input)
-    for (const type in allAntennas) antinodes = addAntinodes(input, allAntennas[type], antinodes)
+    for (const type in allAntennas) antinodes = addAntinodes(input, allAntennas[type], antinodes, isPart2)
     return antinodes.size
 }
 
