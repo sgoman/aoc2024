@@ -25,3 +25,4 @@ The challenges
 6. **[Day 6: Guard Gallivant](day06.js)** Navigate on a grid until you walk off for part 1, place obstacles that makes you loop for part 2
 7. **[Day 7: Bridge Repair](day07.js)** Find combinations from a list of operations that resolve an equation. Part 2 knows of one more operation.
 8. **[Day 8: Resonant Collinearity](day08.js)** Find pairs of the same node on a grid and determine the next (or all for part 2) tiles on the same line on the grid
+9. **[Day 9: Disk Fragmenter](day09.js)** This is not how to defrag disk space! First part fills from right to left, second part only claims space wide enough, but ignores continuous free blocks counting as a whole
