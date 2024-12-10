@@ -20,6 +20,9 @@ const getSurroundingGridTiles = (grid, row, col, deltas) =>
 const getSurrounding = (grid, row, col, deltas) =>
     getSurroundingGridCoords(grid, row, col, deltas).reduce((tiles, [r, c]) => [...tiles, { tile: grid[r][c], row: r, col: c }], [])
 
+// returns a flat map of {row, col, value}
+const gridCells = grid => grid.reduce((cells, line, row) => [...cells, ...line.map((value, col) => { return {row, col, value} })], [])
+
 // "rotates" a two dimenstional array 90° clockwise
 const transpose = grid => grid.reduce((cols, row, r, arr) => {
     if (r == 0) for(let c = 0; c < row.length; c++) cols.push(arr.map(l => l[c]))
@@ -255,7 +258,7 @@ const levenstein = (a, b) => a.reduce((acc, c, i) => acc + (1* (c != b[i])), 0)
 // returns a printable string where all columns of a row are glued together and the rows are joined by new line characters
 const gridToString = grid => grid.map(l => l.join('')).join('\n')
 
-module.exports = { fourWayDeltas, eightWayDeltas, validCoordForGrid, getSurroundingGridCoords, getSurroundingGridTiles, getSurrounding,
+module.exports = { fourWayDeltas, eightWayDeltas, validCoordForGrid, getSurroundingGridCoords, getSurroundingGridTiles, getSurrounding, gridCells,
     transpose, manhattan, combineConditionally, permutator, arraySum, arrayProduct, arrayHasIndex, shuffledArray,
     arrayFrequency, gcd, lcm, pairs, range, Heap, levenstein, gridToString
 }
