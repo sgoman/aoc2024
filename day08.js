@@ -1,21 +1,16 @@
 'use strict'
 
-const { validCoordForGrid, pairs } = require('./utils.js')
+const { validCoordForGrid, gridCells, pairs } = require('./utils.js')
 
 const parseInput = input => input.split('\n').map(l => l.split(''))
 
-const getAllAntennas = grid => {
-    const antennas = {}
-    for (let row = 0; row < grid.length; row++) {
-        for (let col = 0; col < grid[row].length; col++) {
-            if (grid[row][col] != '.') {
-                if (!Object.hasOwn(antennas, grid[row][col])) antennas[grid[row][col]] = []
-                antennas[grid[row][col]].push([row, col])
-            }
-        }
-    }
-    return antennas
-}
+const getAllAntennas = grid => gridCells(grid)
+    .filter(cell => cell.value != '.')
+    .reduce((antennas, {row, col, value}) => {
+        if (!Object.hasOwn(antennas, value)) antennas[value] = []
+        antennas[value].push([row, col])
+        return antennas
+    }, {})
 
 const addAntinodes = (grid, antennas, antinodes, isPart2) => {
     if (antennas.length < 2) return antinodes
