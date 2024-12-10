@@ -4,20 +4,18 @@ const { getSurrounding, fourWayDeltas } = require('./utils.js')
 
 const parseInput = input => input.split('\n').map(l => l.split('').map(Number))
 
-const trails = (grid, row, col, target, path, summits) => {
+const trails = (grid, row, col, target, path, summits, isPart2) => {
 	const steps = getSurrounding(grid, row, col, fourWayDeltas).filter(s => s.tile == target)
-	console.log({row, col, target, steps, summits: summits.size})
 	for (const step of steps) {
-		const coord = `${step.row},${step.col}`
 		if (target == 9) {
+			const coord = isPart2 ? [...path, [step.row, step.col]].map(([r, c]) => `${r},${c}`).join(':') : `${step.row},${step.col}`
+			console.log({row, col, target, coord})
 			summits.add(coord)
 		} else {
-			console.log({target, row: step.row, col: step.col, summits: summits.size})
-			for(const summit of [...trails(grid, step.row, step.col, target + 1, [...path, [row, col]], summits)])
+			for(const summit of [...trails(grid, step.row, step.col, target + 1, [...path, [step.row, step.col]], summits, isPart2)])
 				summits.add(summit)
 		}
 	}
-	console.log({summits: summits.size})
 	return summits
 }
 
@@ -27,7 +25,7 @@ const solve = (isPart2, input) => {
 	for(let row = 0; row < input.length; row++) {
 		for(let col = 0; col < input[row].length; col++) {
 			if (input[row][col] == 0) {
-				score += trails(input, row, col, 1, [[row, col]], new Set()).size
+				score += trails(input, row, col, 1, [[row, col]], new Set(), isPart2).size
 			}
 		}
 	}
