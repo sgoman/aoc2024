@@ -13,21 +13,18 @@ const trails = (grid, path, targetHashes, isPart2) => {
                 // part 1 targets mountain peaks, part 2 the paths to reach them
                 targets.add(isPart2 ? [...path, [step.row, step.col]].map(([r, c]) => `${r},${c}`).join(';') : `${step.row},${step.col}`)
             else
-                // my old version of node does not know about the union method of sets...
+                // my old version of nodejs does not know about the union method of sets...
                 [...trails(grid, [...path, [step.row, step.col]], targets, isPart2)].forEach(target => targets.add(target))
             return targets
         }, targetHashes)
 }
 
-const solve = (isPart2, input) => {
-    input = parseInput(input)
-    return gridCells(input)
-        .filter(cell => cell.value == 0)
-        .reduce((score, {row, col}) => score + trails(input, [[row, col]], new Set(), isPart2).size, 0)
-}
+const solve = (isPart2, input) => gridCells(input)
+    .filter(cell => cell.value == 0)
+    .reduce((score, {row, col}) => score + trails(input, [[row, col]], new Set(), isPart2).size, 0)
 
-const part1 = input => solve(false, input)
+const part1 = input => solve(false, parseInput(input))
 
-const part2 = input => solve(true, input)
+const part2 = input => solve(true, parseInput(input))
 
 module.exports = { part1, part2 }
