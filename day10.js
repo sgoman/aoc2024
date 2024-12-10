@@ -10,28 +10,24 @@ const trails = (grid, nextHeight, path, targets, isPart2) => {
     for (const step of steps) {
         if (nextHeight == 9) {
             // part 1 targets mountain peaks, part 2 the paths to reach them
-            const coords = isPart2 ? [...path, [step.row, step.col]].map(([r, c]) => `${r},${c}`).join(':') : `${step.row},${step.col}`
-            targets.add(coords)
+            targets.add(isPart2 ? [...path, [step.row, step.col]].map(([r, c]) => `${r},${c}`).join(':') : `${step.row},${step.col}`)
         } else {
             // my version of node does not know about the union method...
-            for(const summit of [...trails(grid, nextHeight + 1, [...path, [step.row, step.col]], targets, isPart2)])
-                targets.add(summit)
+            [...trails(grid, nextHeight + 1, [...path, [step.row, step.col]], targets, isPart2)].forEach(summit => targets.add(summit))
         }
     }
     return targets
 }
 
+// a new one for the utils.js :)
+const filterGrid = (grid, filterCallback) => grid.reduce((cells, line, row) => {
+    const filtered = line.map((value, col) => {return {row, col, value}}).filter(filterCallback)
+    return filtered.length ? [...cells, ...filtered] : cells
+}, [])
+
 const solve = (isPart2, input) => {
     input = parseInput(input)
-    let score = 0
-    for(let row = 0; row < input.length; row++) {
-        for(let col = 0; col < input[row].length; col++) {
-            if (input[row][col] == 0) {
-                score += trails(input, 1, [[row, col]], new Set(), isPart2).size
-            }
-        }
-    }
-    return score
+    return filterGrid(input, ({value}) => value == 0).reduce((score, {row, col}) => score + trails(input, 1, [[row, col]], new Set(), isPart2).size, 0)
 }
 
 const part1 = input => solve(false, input)
