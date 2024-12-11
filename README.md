@@ -27,3 +27,4 @@ The challenges
 8. **[Day 8: Resonant Collinearity](day08.js)** Find pairs of the same node on a grid and determine the next (or all for part 2) tiles on the same line on the grid
 9. **[Day 9: Disk Fragmenter](day09.js)** This is not how to defrag disk space! First part fills from right to left, second part only claims space wide enough, but ignores continuous free blocks counting as a whole
 10. **[Day 10: Hoof It](day10.js)** Walking a heightmap on an ascending path. Part 1 counts the number of distinct summits you can reach, part 2 counts the number of unique trails you can take.
+11. **[Day 11: Plutonian Pebbles](day11.js)** Exponential growth, but for part 1 you could simply write code as instructed. Part 2 requires you to incorporate momoization and working on a single stone at a time.
