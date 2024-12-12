@@ -28,3 +28,4 @@ The challenges
 9. **[Day 9: Disk Fragmenter](day09.js)** This is not how to defrag disk space! First part fills from right to left, second part only claims space wide enough, but ignores continuous free blocks counting as a whole
 10. **[Day 10: Hoof It](day10.js)** Walking a heightmap on an ascending path. Part 1 counts the number of distinct summits you can reach, part 2 counts the number of unique trails you can take.
 11. **[Day 11: Plutonian Pebbles](day11.js)** Exponential growth, but for part 1 you could simply write code as instructed. Part 2 requires you to incorporate momoization and working on a single stone at a time.
+12. **[Day 12: Garden Groups](day12.js)** Determine the circumfence of an area in a grid for part 1. Part 2 wants to know how many lines of fences are needed to surround each area.
