@@ -29,3 +29,4 @@ The challenges
 10. **[Day 10: Hoof It](day10.js)** Walking a heightmap on an ascending path. Part 1 counts the number of distinct summits you can reach, part 2 counts the number of unique trails you can take.
 11. **[Day 11: Plutonian Pebbles](day11.js)** Exponential growth, but for part 1 you could simply write code as instructed. Part 2 requires you to incorporate momoization and working on a single stone at a time.
 12. **[Day 12: Garden Groups](day12.js)** Determine the circumfence of an area in a grid for part 1. Part 2 wants to know how many lines of fences are needed to surround each area.
+13. **[Day 13: Claw Contraption](day13.js)** Find the best number of button presses to win claw machine games. Pure math puzzle, as bruteforcing will get you nowhere, especially on part 2!
