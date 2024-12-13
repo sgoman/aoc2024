@@ -2,15 +2,21 @@
 
 const parseInput = input => input.split('\n\n').map(block => block.match(/\d+/g).map(Number))
 
-const solve = (isPart2, input) => input.reduce((tokens, [xa, ya, xb, yb, xp, yp]) => {
-    if (isPart2) [xp, yp] = [xp + 10000000000000, yp + 10000000000000]
-    const d = xa * yb - ya * xb
-    if (d == 0) return tokens
-    const a = (xp * yb - yp * xb) / d
-    const b = (yp * xa - xp * ya) / d
+// cloned to utils.js for future uses
+const cramerPosInt = (ax, ay, bx, by, x, y) => {
+    const d = ax * by - ay * bx
+    if (d == 0) return [0, 0]
+    const a = (x * by - y * bx) / d
+    const b = (y * ax - x * ay) / d
     if (a >= 0 && b >= 0 && a == Math.floor(a) && b == Math.floor(b))
-        tokens += a * 3 + b
-    return tokens
+        return [a, b]
+    return [0, 0]
+}
+
+const solve = (isPart2, input) => input.reduce((tokens, [ax, ay, bx, by, tx, ty]) => {
+    if (isPart2) [tx, ty] = [tx + 10000000000000, ty + 10000000000000]
+    const [a, b] = cramerPosInt(ax, ay, bx, by, tx, ty)
+    return tokens + a * 3 + b
 }, 0)
 
 const part1 = input => solve(false, parseInput(input))

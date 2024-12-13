@@ -143,6 +143,18 @@ const arrayFrequency = elements => elements.reduce((acc, cur) => {
 const gcd = (a, b) => a ? gcd(b % a, a) : b
 const lcm = (a, b) => a * b / gcd(a, b)
 
+// Solve linear algebraic formulas with 2 unknowns and accept only positive integer values as a result
+// returns [a, b] where a * ax + b * bx = u and a * ay + b * by = v or [0, 0] if impossible to solve with positive integers
+const cramerPosInt = (ax, ay, bx, by, u, v) => {
+    const d = ax * by - ay * bx
+    if (d == 0) return [0, 0]
+    const a = (u * by - v * bx) / d
+    const b = (v * ax - u * ay) / d
+    if (a >= 0 && b >= 0 && a == Math.floor(a) && b == Math.floor(b))
+        return [a, b]
+    return [0, 0]
+}
+
 // builds all possible pairs of all entries of a list (without mirrors, simpler and faster for this edge-case than combineConditionally)
 const pairs = (arr) => arr.map( (v, i) => arr.slice(i + 1).map(w => [v, w]) ).flat()
 
@@ -260,5 +272,5 @@ const gridToString = grid => grid.map(l => l.join('')).join('\n')
 
 module.exports = { fourWayDeltas, eightWayDeltas, validCoordForGrid, getSurroundingGridCoords, getSurroundingGridTiles, getSurrounding, gridCells,
     transpose, manhattan, combineConditionally, permutator, arraySum, arrayProduct, arrayHasIndex, shuffledArray,
-    arrayFrequency, gcd, lcm, pairs, range, Heap, levenstein, gridToString
+    arrayFrequency, gcd, lcm, cramerPosInt, pairs, range, Heap, levenstein, gridToString
 }
