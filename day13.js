@@ -3,20 +3,18 @@
 const parseInput = input => input.split('\n\n').map(block => block.match(/\d+/g).map(Number))
 
 // cloned to utils.js for future uses
-const cramerPosInt = (ax, ay, bx, by, x, y) => {
+const cramer2 = (ax, ay, bx, by, tx, ty) => {
     const d = ax * by - ay * bx
     if (d == 0) return [0, 0]
-    const a = (x * by - y * bx) / d
-    const b = (y * ax - x * ay) / d
-    if (a >= 0 && b >= 0 && a == Math.floor(a) && b == Math.floor(b))
-        return [a, b]
-    return [0, 0]
+    return [(tx * by - ty * bx) / d, (ty * ax - tx * ay) / d]
 }
 
 const solve = (isPart2, input) => input.reduce((tokens, [ax, ay, bx, by, tx, ty]) => {
-    if (isPart2) [tx, ty] = [tx + 10000000000000, ty + 10000000000000]
-    const [a, b] = cramerPosInt(ax, ay, bx, by, tx, ty)
-    return tokens + a * 3 + b
+    if (isPart2) [tx, ty] = [tx + 1e13, ty + 1e13]
+    const [a, b] = cramer2(ax, ay, bx, by, tx, ty)
+    if (a >= 0 && b >= 0 && a == Math.floor(a) && b == Math.floor(b))
+        tokens += a * 3 + b
+    return tokens
 }, 0)
 
 const part1 = input => solve(false, parseInput(input))
