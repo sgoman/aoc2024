@@ -14,6 +14,26 @@ To run part 2 of the first challenge with your own input, execute "./aoc 1 2 +" 
 
 If you want to write a days challenge from scratch, issue "./aoc init 1" to generate a boilerplate file for day 1. You can change the boilerplate by editing the file dayTemplate.js.
 
+No Installation
+---------------
+
+Most of the solutions can be run on the Advent of Code page for the input data.
+
+- Copy the code for one day, but leave out the first and last line (don't include the 'use strict' and the 'module.exports' lines). If the code has a line that has "require('./utils.js')" near the top, skip that line as well, but remember to copy the referenced functions from utils.js afterwards.
+- Paste the code into the developer console in your browser when viewing the puzzle input page for a day.
+- Paste the code of any functions that were referenced from utils.js, if any.
+- Enter the command "part1(document.body.innerText)" to run the solution for part 1. Replace the 1 with a 2 for part two. Most of the time you will be able to run both parts repeatedly without problems, but sometimes you can only run one part correctly (e.g. if the code relies on a global cache or something like that). You will have to reload the page and copy the code again in that case, only running the part you are interested in.
+
+Example for the second day of 2024:
+- copy lines 5 through 23 from day02.js (i.e. all code excluding the lines that contain 'use strict', 'utils.js' and 'module.exports')
+- open the page https://adventofcode.com/2024/day/2/input
+- hit F12 or whatever shortcut opens the developer tools in your browser
+- paste the code into the console tab and hit enter
+- copy the code for the function combineConditionally from utils.js
+- paste it into the console tab of the developer tools as well
+- type "part1(document.body.innerText)" without the quotes into the console tab and hit enter for the solution to part 1 
+
+
 The challenges
 --------------
 
@@ -30,3 +50,4 @@ The challenges
 11. **[Day 11: Plutonian Pebbles](day11.js)** Exponential growth, but for part 1 you could simply write code as instructed. Part 2 requires you to incorporate momoization and working on a single stone at a time.
 12. **[Day 12: Garden Groups](day12.js)** Determine the circumfence of an area in a grid for part 1. Part 2 wants to know how many lines of fences are needed to surround each area.
 13. **[Day 13: Claw Contraption](day13.js)** Find the best number of button presses to win claw machine games. Pure math puzzle, as bruteforcing will get you nowhere, especially on part 2!
+14. **[Day 14: Restroom Redoubt](day14.js)** Track particles with constant vectors on a wrapping grid. Do a checksum of the quadrants for part 1, find an "image" of a christmas tree in their pattern for part 2.
