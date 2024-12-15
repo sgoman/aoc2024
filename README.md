@@ -51,3 +51,4 @@ The challenges
 12. **[Day 12: Garden Groups](day12.js)** Determine the circumfence of an area in a grid for part 1. Part 2 wants to know how many lines of fences are needed to surround each area.
 13. **[Day 13: Claw Contraption](day13.js)** Find the best number of button presses to win claw machine games. Pure math puzzle, as bruteforcing will get you nowhere, especially on part 2!
 14. **[Day 14: Restroom Redoubt](day14.js)** Track particles with constant vectors on a wrapping grid. Do a checksum of the quadrants for part 1, find an "image" of a christmas tree in their pattern for part 2.
+15. **[Day 15: Warehouse Woes](day15.js)** Sokoban without designated targets for boxes and a fixed list of moves. Part 2 stretches the grid and the boxes on the x-axis, resulting in more complicated moves on the vertical axis.
