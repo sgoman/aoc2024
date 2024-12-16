@@ -1,58 +1,46 @@
 'use strict'
 
-const { fourWayDeltas, gridCells, validCoordForGrid, gridToString, arraySum } = require('./utils.js')
+const { fourWayDeltas, gridCells, validCoordForGrid } = require('./utils.js')
 
 const parseInput = input => input.split('\n').map(l => l.split(''))
 
-const gridClone = grid => grid.map(r => r.map(c => c))
-
-const printGrid = (grid, steps, score) => {
-    console.log({score})
-    for (const [cost, r, c, d] of steps) grid[r][c] = '^>v<'[d]
-    console.log(gridToString(grid))
-}
+const hash = (r, c, d) => `${r},${c},${d}`
 
 const solve = (isPart2, input) => {
+    const best = isPart2 ? solve(false, input) : 1e12
     const start = gridCells(input).filter(c => c.value == 'S')[0]
     const end = gridCells(input).filter(c => c.value == 'E')[0]
-    let row = start.row, col = start.col
-    input[row][col] = '.'
-    input[end.row][end.col] = '.'
-
-    const getMoves = (grid, row, col, dir) => {
-        const moves = []
-        for (const [d, cost] of [[dir, 1], [(dir + 1) % 4, 1001], [(dir + 3) % 4, 1001]]) {
-            const nr = row + fourWayDeltas[d][0], nc = col + fourWayDeltas[d][1]
-            if (validCoordForGrid(nr, nc, grid) && grid[nr][nc] == '.') moves.push([nr, nc, d, cost])
-        }
-        //console.log({row, col, dir, moves})
-        return moves
-    }
-
-    const walk = (grid, row, col, dir, seen, steps, best) => {
+    const queue = [[start.row, start.col, 1, 0, [start]]]
+    const visited = new Map()
+    const paths = []
+    while (queue.length) {
+        if (!isPart2) queue.sort((a, b) => a[3] - b[3])
+        const [row, col, dir, score, path] = queue.shift()
+        const key = hash(row, col, dir)
+        if (score > best) continue
+        if (!isPart2 && visited.has(key)) continue
+        if (isPart2 && visited.has(key) && visited.get(key) < score) continue
+        visited.set(key, score)
         if (row == end.row && col == end.col) {
-            const score = arraySum(steps.map(s => s[0]))
-            if (score < best) printGrid(gridClone(grid), steps, score)
-            return Math.min(best, score)
+            if (!isPart2) return score
+            paths.push(path)
+            continue
         }
-        const pos = `${row}${col}`
-        if (seen.includes(pos)) return best
-        //console.log('seen length', seen.length)
-        for (const [nr, nc, d, cost] of getMoves(grid, row, col, dir)) {
-            best = Math.min(best, walk(grid, nr, nc, d, [...seen, pos], [...steps, [cost, nr, nc, d]], best))
-        }
-        return best
+        const nr = row + fourWayDeltas[dir][0]
+        const nc = col + fourWayDeltas[dir][1]
+        if (validCoordForGrid(nr, nc, input) && input[nr][nc] != '#')
+            queue.push([nr, nc, dir, score + 1, [...path, {row: nr, col: nc}]])
+        for (const d of [(dir + 1) % 4, (dir + 3) % 4])
+            queue.push([row, col, d, score + 1000, [...path]])
     }
-
-    return walk(input, row, col, 1, [], [], 1e12)
+    return isPart2 ? paths : 0
 }
 
-const part1 = input => {
-    return solve(false, parseInput(input))
-}
+const part1 = input => solve(false, parseInput(input))
 
-const part2 = input => {
-    return solve(true, parseInput(input))
-}
+const part2 = input => solve(true, parseInput(input)).reduce((uniques, path) => {
+    path.forEach(p => uniques.add(hash(p.row, p.col, 0)))
+    return uniques
+}, new Set()).size
 
 module.exports = { part1, part2 }

@@ -52,3 +52,4 @@ The challenges
 13. **[Day 13: Claw Contraption](day13.js)** Find the best number of button presses to win claw machine games. Pure math puzzle, as bruteforcing will get you nowhere, especially on part 2!
 14. **[Day 14: Restroom Redoubt](day14.js)** Track particles with constant vectors on a wrapping grid. Do a checksum of the quadrants for part 1, find an "image" of a christmas tree in their pattern for part 2.
 15. **[Day 15: Warehouse Woes](day15.js)** Sokoban without designated targets for boxes and a fixed list of moves. Part 2 stretches the grid and the boxes on the x-axis, resulting in more complicated moves on the vertical axis.
+16. **[Day 16: Reindeer Maze](day16.js)** Shortest path through a maze with a custom cost on turning for part 1. Part 2 finds all alternative shortest routes and counts the number of tiles touched by them.
