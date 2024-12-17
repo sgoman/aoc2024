@@ -4,41 +4,18 @@ const parseInput = input => input.split('\n\n').map(b => b.match(/\d+/g).map(Num
 
 const solve = ([regs, code]) => {
     let ip = 0, output = []
-    const combo = operand => {
-	if (operand < 4) return operand
-	if (operand < 7) return regs[operand - 4]
-	console.log('!!! illegal combo operand: ', operand, 'at ip', ip)
-    }
-
+    const combo = operand => [0, 1, 2, 3, regs[0], regs[1], regs[2]][operand]
     while (ip >= 0 && ip < code.length - 1) {
-	let [cmd, op] = [code[ip], code[ip + 1]]
+	const [cmd, op] = [code[ip], code[ip + 1]]
 	switch (cmd) {
-	    case 0: // adv
-		regs[0] = Math.floor(regs[0] / Math.pow(2, combo(op)))
-		break
-	    case 1: // bxl
-		regs[1] = regs[1] ^ op
-		break
-	    case 2: // bst
-		regs[1] = combo(op) % 8
-		break
-	    case 3: // jnz
-		if (regs[0]) ip = op - 2
-		break
-	    case 4: // bxc
-		regs[1] = regs[1] ^ regs[2]
-		break
-	    case 5: // out
-		output.push(combo(op) & 7)
-		break
-	    case 6: // bdv
-		regs[1] = Math.floor(regs[0] / Math.pow(2, combo(op)))
-		break
-	    case 7: // cdv
-		regs[2] = Math.floor(regs[0] / Math.pow(2, combo(op)))
-		break
-	    default:
-		console.log('unknown cmd ad ip', ip)
+	    case 0: regs[0] = Math.floor(regs[0] / Math.pow(2, combo(op))); break
+	    case 1: regs[1] = regs[1] ^ op; break
+	    case 2: regs[1] = combo(op) % 8; break
+	    case 3: if (regs[0]) ip = op - 2; break
+	    case 4: regs[1] = regs[1] ^ regs[2]; break
+	    case 5: output.push(combo(op) & 7); break
+	    case 6: regs[1] = Math.floor(regs[0] / Math.pow(2, combo(op))); break
+	    case 7: regs[2] = Math.floor(regs[0] / Math.pow(2, combo(op))); break
 	}
 	ip += 2
     }
