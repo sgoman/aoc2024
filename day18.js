@@ -7,7 +7,7 @@ const parseInput = input => input.split('\n').map(l => l.match(/\d+/g).map(Numbe
 const solve = (isPart2, input, bytes, goalRow, goalCol) => {
     const grid = Array.from({length: goalRow + 1}, () => Array(goalCol + 1).fill('.'))
     for (let b = 0; b < bytes; b++) grid[input[b][1]][input[b][0]] = '#'
-    const hash = (r, c) => `${r}${c}`
+    const hash = (r, c) => `${r},${c}`
     const seen = new Set(), queue = [[0, 0, 0, [[0, 0]]]]
     seen.add(hash(0, 0))
     while (queue.length) {
