@@ -27,7 +27,7 @@ const part1 = input => solve(false, parseInput(input), 1024, 70, 70) // for the 
 
 const part2 = input => {
     const corruptions = parseInput(input)
-    for (let c = 0; c < corruptions.length; c++) {
+    for (let c = 1024; c < corruptions.length; c++) {
         const pathLength = solve(true, corruptions, c + 1, 70, 70)
         if (pathLength == -1) return corruptions[c].join(',')
     }
