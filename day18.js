@@ -4,7 +4,7 @@ const { getSurrounding } = require('./utils.js')
 
 const parseInput = input => input.split('\n').map(l => l.match(/\d+/g).map(Number))
 
-const solve = (isPart2, input, bytes, goalRow, goalCol) => {
+const solve = (input, bytes, goalRow, goalCol) => {
     const grid = Array.from({length: goalRow + 1}, () => Array(goalCol + 1).fill('.'))
     for (let b = 0; b < bytes; b++) grid[input[b][1]][input[b][0]] = '#'
     const hash = (r, c) => `${r},${c}` // that comma did cost me about 145 minutes...
@@ -23,12 +23,12 @@ const solve = (isPart2, input, bytes, goalRow, goalCol) => {
     return -1
 }
 
-const part1 = input => solve(false, parseInput(input), 1024, 70, 70) // for the sample input, replace 1024, 70, 70 by 12, 6, 6!
+const part1 = input => solve(parseInput(input), 1024, 70, 70) // for the sample input, replace 1024, 70, 70 by 12, 6, 6!
 
 const part2 = input => {
     const corruptions = parseInput(input)
     for (let c = 1024; c < corruptions.length; c++) {
-        const pathLength = solve(true, corruptions, c + 1, 70, 70)
+        const pathLength = solve(corruptions, c + 1, 70, 70)
         if (pathLength == -1) return corruptions[c].join(',')
     }
 }
