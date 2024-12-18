@@ -1,11 +1,11 @@
 'use strict'
 
-const { getSurrounding } = require('./utils.js')
+const { gridInit, getSurrounding } = require('./utils.js')
 
 const parseInput = input => input.split('\n').map(l => l.match(/\d+/g).map(Number))
 
 const solve = (corruptions, goalRow, goalCol) => {
-    const grid = Array.from({length: goalRow + 1}, () => Array(goalCol + 1).fill('.'))
+    const grid = gridInit(goalRow + 1, goalCol + 1, '.')
     for (const [c, r] of corruptions) grid[r][c] = '#'
     const hash = (r, c) => `${r},${c}` // that comma did cost me about 145 minutes...
     const seen = new Set(), queue = [[0, 0, 0]]
