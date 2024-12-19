@@ -5,7 +5,7 @@ const parseInput = input => {
     return [available.split(', '), desired.split('\n')]
 }
 
-const solve = (isPart2, [available, desired]) => {
+const solve = ([available, desired]) => {
     const cache = new Map()
     const waysToBuild = design => {
         if (design.length == 0) return 1
@@ -16,11 +16,11 @@ const solve = (isPart2, [available, desired]) => {
         cache.set(design, count)
         return count
     }
-    return desired.reduce((possible, design) => possible + (isPart2 ? waysToBuild(design) : ~~(waysToBuild(design) > 0)), 0)
+    return desired.reduce(([p1, p2], design) => [p1 + ~~(waysToBuild(design) > 0), p2 + waysToBuild(design)], [0, 0])
 }
 
-const part1 = input => solve(false, parseInput(input))
+const part1 = input => solve(parseInput(input))[0]
 
-const part2 = input => solve(true, parseInput(input))
+const part2 = input => solve(parseInput(input))[1]
 
 module.exports = { part1, part2 }
