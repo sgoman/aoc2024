@@ -55,3 +55,4 @@ The challenges
 16. **[Day 16: Reindeer Maze](day16.js)** Shortest path through a maze with a custom cost on turning for part 1. Part 2 finds all alternative shortest routes and counts the number of tiles touched by them.
 17. **[Day 17: Chronospatial Computer](day17.js)** Implement a fantasy console again. Easy part 1. Observation for part 2: increasing numbers generate the output from the back and are multiplied by 8 to skip a lot of computation, so you can recursively come up with a solution. And you should "& 7" the output, not "% 8" to avoid negative numbers!
 18. **[Day 18: RAM Run](day18.js)** BFS maze solving. Single maze in part 2, possibly the number of lines in input times for part 2.
+19. **[Day 19: Linen Layout](day19.js)** Recursively deconstructing designs by a list of patterns, with memoization.
