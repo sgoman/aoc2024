@@ -8,6 +8,9 @@ const eightWayDeltas = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1
 // returns a new 2D grid of the desired dimensions and initialized with a predefined value
 const gridInit = (rows, cols, value) => Array.from({length: rows}, () => Array(cols).fill(value))
 
+// returns a copy of a 2D grid
+const gridClone = grid => grid.map(r => r.map(c => c))
+
 // checks whether a row and colum exist in a grid
 const validCoordForGrid = (row, col, grid) => row >= 0 && row < grid.length && col >= 0 && col < grid[row].length
 
@@ -269,7 +272,7 @@ const levenstein = (a, b) => a.reduce((acc, c, i) => acc + (1* (c != b[i])), 0)
 // returns a printable string where all columns of a row are glued together and the rows are joined by new line characters
 const gridToString = grid => grid.map(l => l.join('')).join('\n')
 
-module.exports = { fourWayDeltas, eightWayDeltas, gridInit, validCoordForGrid, getSurroundingGridCoords, getSurroundingGridTiles, getSurrounding, gridCells,
+module.exports = { fourWayDeltas, eightWayDeltas, gridInit, gridClone, validCoordForGrid, getSurroundingGridCoords, getSurroundingGridTiles, getSurrounding, gridCells,
     transpose, manhattan, combineConditionally, permutator, arraySum, arrayProduct, arrayHasIndex, shuffledArray,
     arrayFrequency, gcd, lcm, cramer2, pairs, range, Heap, levenstein, gridToString
 }
