@@ -57,3 +57,4 @@ The challenges
 18. **[Day 18: RAM Run](day18.js)** BFS maze solving. Single maze in part 2, possibly the number of lines in input times for part 2.
 19. **[Day 19: Linen Layout](day19.js)** Recursively deconstructing designs by a list of patterns, with memoization.
 20. **[Day 20: Race Condition](day20.js)** Race through a maze with cheats? Get a list of all tiles on the path and their distance to start or finish, then find shortcuts depending on the manhattan distance between those.
+21. **[Day 21: Keypad Conundrum](day21.js)** Can be solved as a series of two small mazes of two different keypads. The path through the numpad feedin into the series of two directional pads for part 1 and 25 of those in part 2.
