@@ -34,7 +34,7 @@ const part2 = input => {
             }
         }
     }
-    return Math.max(...[...total.values()])
+    return Math.max(...total.values())
 }
 
 module.exports = { part1, part2 }
