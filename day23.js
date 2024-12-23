@@ -9,25 +9,22 @@ const parseInput = input => input.split('\n').reduce((graph, line) => {
     return graph
 }, new Map())
 
-const getTrios = input => {
-    const trios = new Set()
-    for (const [node, neighbours] of input) {
-        const linked = Array.from(neighbours)
-        for (let i = 0; i < linked.length; i++) {
-            for (let j = i + 1; j < linked.length; j++) {
-                const [a, b] = [linked[i], linked[j]]
-                if (input.get(a).has(b)) {
-                    const trio = [node, a, b]
-                    if (trio.some(t => t[0] == 't')) {
-                        trio.sort()
-                        trios.add(trio.join(','))
-                    }
+const getTrios = input => [...input].reduce((trios, [node, neighbours]) => {
+    const linked = Array.from(neighbours)
+    for (let i = 0; i < linked.length; i++) {
+        for (let j = i + 1; j < linked.length; j++) {
+            const [a, b] = [linked[i], linked[j]]
+            if (input.get(a).has(b)) {
+                const trio = [node, a, b]
+                if (trio.some(t => t[0] == 't')) {
+                    trio.sort()
+                    trios.add(trio.join(','))
                 }
             }
         }
     }
-    return trios.size
-}
+    return trios
+}, new Set()).size
 
 const enumerate = (graph, keys, groups, excluded, biggest) => {
     if (keys.size == 0 && excluded.size == 0) {

@@ -59,3 +59,4 @@ The challenges
 20. **[Day 20: Race Condition](day20.js)** Race through a maze with cheats? Get a list of all tiles on the path and their distance to start or finish, then find shortcuts depending on the manhattan distance between those.
 21. **[Day 21: Keypad Conundrum](day21.js)** Can be solved as a series of two small mazes of two different keypads. The path through the numpad feeding into the series of two directional pads for part 1 and 25 of those in part 2.
 22. **[Day 22: Monkey Market](day22.js)** Simple number crunching for part 1. Part 2 is a bit more involved, keeping track of the last digit and the changes to the last of those and then finding a sequence of four changes that yield the highes result for all input numbers.
+23. **[Day 23: LAN Party](day23.js)** Build a graph. Find groups of three where at least one node starts with 't' for part 1. Find the biggest group of linked nodes and use them as a password for part 2.
