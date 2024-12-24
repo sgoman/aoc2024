@@ -34,31 +34,15 @@ const solve = ([def, wires]) => {
 const part1 = input => solve(parseInput(input))[0]
 
 const part2 = input => {
+    // OUCH! Reversing the hidden code of the input AND remodeling a graph combined!
     let [def, wires] = parseInput(input)
-    /*
-    // manually check the bits of the result against the sum of x and y
-    const swap = ['z07', 'z08', 'z12', 'z15', 'z13', 'z39']
-    for (let i = 0; i < swap.length - 1; i += 2) {
-        const [l, r] = [swap[i], swap[i + 1]]
-        for (let j = 0; j < wires.length; j++) {
-            if (wires[j][3] == l) {
-                wires[j][3] = r
-            } else if (wires[j][3] == r) {
-                wires[j][3] = l
-            }
-        }
-    }
-    const [z, x, y] = solve([def, wires])
-    const s = x + y
-    swap.sort()
-    return (z == s) ? swap.join(',') : {z: z.toString(2), s: (x + y).toString(2)}
-    */
-
     const swaps = new Set()
     // all outputs to z that are not xor'ing are wrong, except for the one to z45
+    // This finds 3 candidates to swap on my input
     wires.filter(([a, op, b, o]) => o[0] == 'z' && o != 'z45' && op != 'XOR').forEach(f => swaps.add(f[3]))
 
     // all outputs to z that are not xor'ing x and y are wrong, except for z00
+    // This finds another 3 candidates to swap on my input. They might pair up with the first ones, but I never bothered to check.
     wires.filter(([a, op, b, o]) => op == 'XOR' && 'xy'.search(a[0]) == -1 && 'xy'.search(b[0]) == -1 && o != 'z00' && o[0] != 'z').forEach(f => swaps.add(f[3]))
 
     // all XOR wires working on x must feed into another XOR wire that does not work on x, except the ones already in swaps or outputing to z00
@@ -66,14 +50,19 @@ const part2 = input => {
         if (swaps.has(wire[3]) || wire[3] == 'z00') continue
         const thirds = wires.filter(([a, op, b, o]) => op == 'XOR' && !(a[0] == 'x' || b[0] == 'x') && (a == wire[3] || b == wire[3]))
         if (thirds.length == 0) {
-            swaps.add(wire[3])
+            swaps.add(wire[3]) // the second to last candidate
             // now find the intended wire to output on
             const correctOutput = wires.filter(f => f[3] == `z${wire[0].slice(1)}`)[0]
             // one of those inputs should come from an OR wire
             const orWire = wires.filter(f => f[1] == 'OR' && [correctOutput[0], correctOutput[2]].includes(f[3]))[0]
-            swaps.add([correctOutput[0], correctOutput[2]].find(f => f != orWire[3]))
+            swaps.add([correctOutput[0], correctOutput[2]].find(f => f != orWire[3])) // finally!
         }
     }
+    // There should be a check (which would apply changes to the input and crunch that by solve())
+    // to see if any possible combination of swaps really sums up x and y correctly, but the challenge
+    // asks for the sorted names of wires only and my checks added up to the required 8, so just
+    // yolo'ed it and it was correct.
+    // Keep in mind that my code might not work on your input!
     return [...swaps].sort().join(',')
 }
 
